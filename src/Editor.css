@@ -1,0 +1,29 @@
+input {
+    background-color: transparent;
+    border: none;
+    margin-right: 25px;
+    text-align: center;
+    border-bottom: 2px solid #ddd;
+}
+
+input:hover,input:focus {
+    border-bottom: 2px solid #444;
+}
+
+svg {
+    margin-top:20px;
+}
+#add-button {
+    fill: #999;
+  }
+#add-button:hover {
+    fill: #333;
+  }
+
+#generate-button {
+    fill: #4CAF50;
+}
+
+#generate-button:hover {
+    fill: #004D40;
+}
