@@ -12,6 +12,7 @@ class Editor extends Component {
         this.newEntry = this.newEntry.bind(this);
         this.onKeyEntry = this.onKeyEntry.bind(this);
         this.onValueEntry = this.onValueEntry.bind(this);
+        this.onKeyDown = this.onKeyDown.bind(this);
         this.parseJSON = this.parseJSON.bind(this);
     }
     newEntry = () => {
@@ -23,6 +24,7 @@ class Editor extends Component {
 
         const valueField = document.createElement('input');
         valueField.addEventListener("change",this.onValueEntry);
+        valueField.addEventListener("focus",this.onKeyDown);
         textArea.appendChild(valueField);
 
         textArea.appendChild(document.createElement('br'));
@@ -35,10 +37,23 @@ class Editor extends Component {
         })
     }
     onValueEntry = (e) => {
-        this.setState({
-            value : e.target.value
-        })
-        this.json[this.state.key] = this.state.value;
+        this.setState({ value : e.target.value })
+
+        if (Number.isInteger(Number(e.target.value)))
+        this.json[this.state.key] = Number(this.state.value);
+        else if( e.target.value === "true")
+        this.json[this.state.key] = Boolean(this.state.value);   
+        else if( e.target.value === "false")     
+        this.json[this.state.key] = false;
+        else if( e.target.value[0] === "{")
+        this.json[this.state.key] = JSON.parse(e.target.value);
+        else if( e.target.value[0] === "[")
+        this.json[this.state.key] = e.target.value;
+        else this.json[this.state.key] = this.state.value;
+    }
+
+    onKeyDown = () => {
+        this.newEntry();
     }
 
     parseJSON = () => {
